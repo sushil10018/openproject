@@ -30,9 +30,15 @@
 # script/ci_setup.sh
 #!/bin/sh
 
+# $1 = DB
+# $2 = TEST_SUITE
+
 run() {
   echo $1;
   eval $1;
+
+  echo $2;
+  eval $2;
 }
 
 if [ $1 = "mysql" ]; then
@@ -48,5 +54,13 @@ fi
 # run migrations for mysql or postgres
 if [ $1 != '' ]; then
   run "bundle exec rake db:migrate"
+fi
+
+if [ $2 != 'specs' ] && [ $2 != 'spec_legacy' ]; then
   run "bundle exec rake assets:precompile"
+else
+  # fake having compiled the assets
+  run "mkdir -p app/assets/javascripts/bundles"
+  run "touch app/assets/javascripts/bundles/openproject-core-app.css"
+  run "touch app/assets/javascripts/bundles/openproject-core-app.js"
 fi
