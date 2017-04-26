@@ -30,8 +30,8 @@
 # script/ci_setup.sh
 #!/bin/sh
 
-# $1 = DB
-# $2 = TEST_SUITE
+# $1 = TEST_SUITE
+# $2 = DB
 
 run() {
   echo $1;
@@ -51,22 +51,22 @@ else
   run "echo 'only frontend'"
 fi
 
-if [ $1 = "mysql" ]; then
+if [ $2 = "mysql" ]; then
   run "mysql -e 'create database travis_ci_test;'"
   run "cp script/templates/database.travis.mysql.yml config/database.yml"
 
-elif [ $1 = "postgres" ]; then
+elif [ $2 = "postgres" ]; then
   run "psql -c 'create database travis_ci_test;' -U postgres"
   run "cp script/templates/database.travis.postgres.yml config/database.yml"
 
 fi
 
 # run migrations for mysql or postgres
-if [ $2 != 'npm' ]; then
+if [ $1 != 'npm' ]; then
   run "bundle exec rake db:migrate"
 fi
 
-if [ $2 != 'specs' ] && [ $2 != 'spec_legacy' ]; then
+if [ $1 != 'specs' ] && [ $1 != 'spec_legacy' ]; then
   # We need npm 4.0 for a bugfix in cross-platform shrinkwrap
   # https://github.com/npm/npm/issues/14042
   run "npm install npm@4.0"

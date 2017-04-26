@@ -93,7 +93,7 @@ before_install:
 bundler_args: --without development production docker
 
 before_script:
-  - sh script/ci_setup.sh $DB $TEST_SUITE
+  - sh script/ci_setup.sh $TEST_SUITE $DB
 
 script:
   - sh script/ci_runner.sh
