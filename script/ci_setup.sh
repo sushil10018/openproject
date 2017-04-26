@@ -52,13 +52,11 @@ elif [ $1 = "postgres" ]; then
 fi
 
 # run migrations for mysql or postgres
-if [ $1 != '' ]; then
+if [ $2 != 'npm' ]; then
   run "bundle exec rake db:migrate"
 fi
 
 if [ $2 != 'specs' ] && [ $2 != 'spec_legacy' ]; then
-  # Install Node LTS Boron (6.9.1)
-  run "nvm install 6.9.1"
   # We need npm 4.0 for a bugfix in cross-platform shrinkwrap
   # https://github.com/npm/npm/issues/14042
   run "npm install npm@4.0"
