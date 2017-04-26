@@ -57,10 +57,21 @@ if [ $1 != '' ]; then
 fi
 
 if [ $2 != 'specs' ] && [ $2 != 'spec_legacy' ]; then
+  # Install Node LTS Boron (6.9.1)
+  run "nvm install 6.9.1"
+  # We need npm 4.0 for a bugfix in cross-platform shrinkwrap
+  # https://github.com/npm/npm/issues/14042
+  run "npm install npm@4.0"
+
+  run "for i in {1..3}; do npm install && break || sleep 15; done"
+
   run "bundle exec rake assets:precompile"
 else
-  # fake having compiled the assets
+  # fake result of npm/asset run
   run "mkdir -p app/assets/javascripts/bundles"
-  run "touch app/assets/javascripts/bundles/openproject-core-app.css"
   run "touch app/assets/javascripts/bundles/openproject-core-app.js"
+  run "touch app/assets/javascripts/bundles/openproject-vendors.js"
+
+  run "mkdir -p app/assets/stylesheets/bundles"
+  run "touch app/assets/javascripts/bundles/openproject-core-app.css"
 fi
