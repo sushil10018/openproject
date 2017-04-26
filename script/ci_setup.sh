@@ -41,6 +41,16 @@ run() {
   eval $2;
 }
 
+run "echo $TRAVIS_BRANCH"
+run "echo $TRAVIS_PULL_REQUEST_BRANCH"
+run "echo $TRAVIS_PULL_REQUEST"
+
+if [ `git diff \`git merge-base $TRAVIS_BRANCH $TRAVIS_BRANCH\` --name-only | grep -v ^frontend/ | wc -l` > 0 ]; then
+  run "echo 'more than frontend'"
+else
+  run "echo 'only frontend'"
+fi
+
 if [ $1 = "mysql" ]; then
   run "mysql -e 'create database travis_ci_test;'"
   run "cp script/templates/database.travis.mysql.yml config/database.yml"
