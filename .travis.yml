@@ -76,8 +76,8 @@ env:
 
 before_install:
   - "rvm @default,@global do gem uninstall bundler bundle rubygems-update -a -x"
-  - gem update --system 2.6.1
-  - gem install bundler
+  - gem update --system 2.6.8
+  - gem install bundler -v 1.13.6
   - echo `bundle -v`
 
   - echo `bundle exec bundle exec ls`
