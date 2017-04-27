@@ -64,6 +64,7 @@ fi
 # run migrations for mysql or postgres
 if [ $1 != 'npm' ]; then
   run "bundle exec rake db:migrate"
+  run "bundle install --binstub"
 fi
 
 if [ $1 != 'specs' ] && [ $1 != 'spec_legacy' ]; then
