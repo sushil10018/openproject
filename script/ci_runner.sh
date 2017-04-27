@@ -45,7 +45,7 @@ case "$TEST_SUITE" in
             exec bundle exec rspec -I spec_legacy -o "--seed $CI_SEED" spec_legacy
             ;;
         specs)
-            exec parallel_test --type rspec -o "--seed $CI_SEED" -n $GROUP_SIZE --only-group $GROUP --pattern '^spec/(?!features\/)' spec
+            bundle exec --path=${BUNDLE_PATH:-vendor/bundle} parallel_test --type rspec -o "--seed $CI_SEED" -n $GROUP_SIZE --only-group $GROUP --pattern '^spec/(?!features\/)' spec
             ;;
         features)
             exec parallel_test --type rspec -o "--seed $CI_SEED" -n $GROUP_SIZE --only-group $GROUP --pattern '^spec\/features\/' spec
