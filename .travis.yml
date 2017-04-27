@@ -78,8 +78,6 @@ before_install:
   - "rvm @default,@global do gem uninstall bundler -a -x"
   - gem install bundler -v 1.13.2
   - echo `bundle -v`
-  #- bundle_path=$(which bundle)
-   #- sed -i -e "s/activate_bin_path/bin_path/g" $bundle_path
 
   - echo `bundle exec bundle exec ls`
 
