@@ -96,7 +96,7 @@ before_install:
   - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
   - export PATH=$PWD/travis-phantomjs:$PATH
 
-bundler_args: --without development production docker
+bundler_args: --binstubs --without development production docker
 
 before_script:
   - sh script/ci_setup.sh $TEST_SUITE $DB
